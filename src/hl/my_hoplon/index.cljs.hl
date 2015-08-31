@@ -1,0 +1,47 @@
+(page "index.html"
+  (:require
+    [my-hoplon.rpc :as rpc]
+    [tailrecursion.hoplon.reload :refer [reload-all]]))
+
+(reload-all 1000)
+
+
+
+;;(defc= susername rpc/get-username)
+
+;;(def counter (cell 0))
+;; (def register?        (cell nil))
+;; (def toggle-register! #(swap! register? not))
+;; (def log-reg!         #(if @register? (rpc/register! %1 %2 %3) (c/login! %1 %2)))
+
+
+(rpc/init)
+
+(def a-void "javascript:void(0)")
+
+(html
+  (head
+   (link :href "css/semantic.css" :rel "stylesheet"))
+  (body
+;;          (div {:id "login-pane" :do-toggle rpc/show-login?}
+;;         (form
+;;           :id "login"
+;;           :on-submit #(log-reg! (val-id "user") (val-id "pass") (val-id "pass2"))
+;;           (div
+;;             (label "Username")
+;;             (input :type "text" :id "user" :autofocus "autofocus"))))
+
+
+   (div {:id "content"}
+    (h1 (text "Hello, Hoplon and Castra! ~{rpc/random-number}"))
+    (a :href a-void :on-click #(rpc/get-random) (text "Nowy numerek")))
+   (div :class "name"
+        (text "Imiona")
+        (ul
+                       (loop-tpl :bindings [user rpc/username]
+                            (li (text "~{user}"))
+                                 )))
+
+   (a :href a-void :on-click #(rpc/get-username) (text "Pobierz imie"))
+   ))
+
